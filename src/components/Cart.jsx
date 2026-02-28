@@ -3,22 +3,19 @@ import "./Cart.css";
 
 function Cart({ items }) {
   return (
-    <div id="cart-ui">
-      <div id="cart-icon">🛒</div>
-
+    <div id="cart">
       <div id="cart-stack">
         {items.map((item, index) => (
           <div
             key={index}
             className="cart-item"
             style={{
-              top: -index * 14,
-              transform: `rotate(${index * 4}deg)`,
-              zIndex: index + 1,
+              bottom: index * 18,
+              transform: `rotate(${((index * 137) % 21) - 10}deg)`,
+              zIndex: index,
             }}
           >
-            {/* show text (name) in the cart stack */}
-            <div className="cart-item-label">{item.name}</div>
+            <img src={item.image} alt={item.name} style={{ width: 30, height: 30, objectFit: "contain" }} />
           </div>
         ))}
       </div>

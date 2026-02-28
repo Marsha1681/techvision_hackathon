@@ -1,23 +1,27 @@
+import { useState } from "react";
 import ShoppingList from "./components/ShoppingList";
+import Cart from "./components/Cart";
 import { motion } from "framer-motion";
 import './App.css'
 
 function App() {
+  const [cartItems, setCartItems] = useState([]);
   const vWidth = window.innerWidth;
   const vHeight = window.innerHeight;
+
+  function addToCart(item) {
+    setCartItems((prev) => [...prev, item]);
+  }
 
   return (
     <>
       <div id="container">
         <div id="item-list">
             <h2>Browse Items</h2>
-            <ShoppingList />
+            <ShoppingList onAddToCart={addToCart} />
         </div>
-        <div>
-          <motion.img
-            id="cart"
-            src="/shopping-cart.png"
-            alt="Shopping cart image"
+      <div>
+          <motion.div
             initial={{ x: 0, y: vHeight - 300 }}
             animate={{ x: [0, vWidth - 600, 0] }}
             transition={{
@@ -26,7 +30,10 @@ function App() {
               repeatType: "loop",
               ease: "linear"
             }}
-          />
+          >
+            <img id="shopcart" src="/shopping-cart.png" alt="Shopping cart" />
+            <Cart items={cartItems} />
+          </motion.div>
         </div>
       </div>
     </>

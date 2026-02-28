@@ -15,11 +15,11 @@ const items = [
   { id: 10, name: "Perfume", image: "/perfume.png" },
 ];
 
-export default function ShoppingList({ onAdd }) {
+export default function ShoppingList({ onAddToCart }) {
   return (
     <div className="shopping-container">
       {items.map((item) => (
-        <SlingshotItem key={item.id} item={item} onAdd={onAdd} />
+        <SlingshotItem key={item.id} item={item} onAdd={onAddToCart} />
       ))}
     </div>
   );
