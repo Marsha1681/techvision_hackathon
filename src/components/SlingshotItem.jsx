@@ -1,7 +1,13 @@
 import { motion, useAnimation } from "framer-motion";
 import { useRef } from "react";
 
-export default function SlingshotItem({ item, onAdd }) {
+
+/**
+ * SlingshotItem
+ * - Drag the item; if released with enough offset it will fly
+ *   toward the cart and can also get sucked into the vacuum hole.
+ */
+export default function SlingshotItem({ item, onAdd, onMiss }) {
 	const controls = useAnimation();
 	const ref = useRef(null);
 
@@ -19,6 +25,7 @@ export default function SlingshotItem({ item, onAdd }) {
 			controls.set({ x: 0, y: 0 });
 			launchWithGravity(v0x, v0y);
 		} else {
+            onMiss?.();
 			controls.start({
 				x: 0,
 				y: 0,
@@ -116,6 +123,7 @@ export default function SlingshotItem({ item, onAdd }) {
 			if (y < window.innerHeight + 200) {
 				requestAnimationFrame(animate);
 			} else {
+                if (!hasAdded) onMiss?.();
 				controls.set({ x: 0, y: 0 });
 			}
 		};
