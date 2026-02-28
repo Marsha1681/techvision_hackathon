@@ -1,0 +1,27 @@
+.shopping-container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px; /* for smaller spacing lol */
+}
+
+
+.shopping-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: grab;
+}
+
+/* to have smaller icons for images */
+.shopping-image {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+}
+
+/* the list on the right */
+.shopping-label {
+  font-size: 14px;
+  font-weight: 500;
+  color: #333;
+}

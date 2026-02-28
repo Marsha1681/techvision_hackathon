@@ -1,23 +1,19 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import "./App.css";
+import ShoppingList from "./components/ShoppingList";
 
 function App() {
   return (
-    <>
-      <div id="container">
-        <div id="item-list">
-            <h2>Browse Items</h2>
-        </div>
+    <div id="container">
+      <div id="item-list">
+        <h2>Browse Items</h2>
+        <ShoppingList />
+      </div>
 
-      <div>
+      <div id="cart-area">
         Cart here
       </div>
     </div>
-
-    </>
-  )
+  );
 }
 
-export default App
+export default App;
