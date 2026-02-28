@@ -6,6 +6,7 @@ import './App.css'
 
 function App() {
   const [cartItems, setCartItems] = useState([]);
+  const total = cartItems.reduce((sum, item) => sum + item.price, 0);
   const vWidth = window.innerWidth;
   const vHeight = window.innerHeight;
 
@@ -16,6 +17,7 @@ function App() {
   return (
     <>
       <div id="container">
+        <div id="total-badge">${total.toFixed(2)}</div>
         <div id="item-list">
             <h2>Browse Items</h2>
             <ShoppingList onAddToCart={addToCart} />
