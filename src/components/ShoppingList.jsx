@@ -21,7 +21,6 @@ export default function ShoppingList() {
         <motion.div
           key={item.id}
           className="shopping-item"
-          drag
         >
           <img
             src={item.image}
