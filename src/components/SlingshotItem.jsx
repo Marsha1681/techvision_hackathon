@@ -1,6 +1,7 @@
 import { motion, useAnimation } from "framer-motion";
 import { useRef } from "react";
 
+
 /**
  * SlingshotItem
  * - Drag the item; if released with enough offset it will fly
@@ -12,7 +13,6 @@ export default function SlingshotItem({ item, onAdd, onMiss }) {
 
 	const handleDragEnd = async (event, info) => {
 		const distance = Math.hypot(info.offset.x, info.offset.y);
-
 		const DISTANCE_THRESHOLD = 120;
 
 		if (distance > DISTANCE_THRESHOLD) {
@@ -22,9 +22,7 @@ export default function SlingshotItem({ item, onAdd, onMiss }) {
 			const v0x = -dx * 7;
 			const v0y = -dy * 7;
 
-			// Snap back instantly before launch
 			controls.set({ x: 0, y: 0 });
-
 			launchWithGravity(v0x, v0y);
 		} else {
             onMiss?.();
@@ -39,12 +37,15 @@ export default function SlingshotItem({ item, onAdd, onMiss }) {
 	const launchWithGravity = (v0x, v0y) => {
 		let start = null;
 		let hasAdded = false;
+		let hasSucked = false; // NEW FLAG
 
 		const gravity = 2000;
 		const startX = 0;
 		const startY = 0;
 
 		const animate = (timestamp) => {
+			if (hasSucked) return; // STOP EVERYTHING IF SUCKED
+
 			if (!start) start = timestamp;
 			const t = (timestamp - start) / 1000;
 
@@ -58,9 +59,7 @@ export default function SlingshotItem({ item, onAdd, onMiss }) {
 
 			const itemRect = element.getBoundingClientRect();
 
-			// -----------------------------
-			// 🛒 CART COLLISION CHECK
-			// -----------------------------
+			//  CART COLLISION
 			if (!hasAdded) {
 				const cartEl = document.querySelector("#cart-stack");
 
@@ -83,45 +82,44 @@ export default function SlingshotItem({ item, onAdd, onMiss }) {
 				}
 			}
 
-			
-			// VACUUM COLLISION CHECK (MULTIPLE)
-
+			// VACUUM COLLISION
 			const vacuums = document.querySelectorAll(".vacuum-hole");
 
-			vacuums.forEach((vacuum) => {
-			const vacuumRect = vacuum.getBoundingClientRect();
+			for (let i = 0; i < vacuums.length; i++) {
+				const vacuumRect = vacuums[i].getBoundingClientRect();
 
-			const sucked = !(
-				itemRect.right < vacuumRect.left ||
-				itemRect.left > vacuumRect.right ||
-				itemRect.bottom < vacuumRect.top ||
-				itemRect.top > vacuumRect.bottom
-			);
+				const sucked = !(
+					itemRect.right < vacuumRect.left ||
+					itemRect.left > vacuumRect.right ||
+					itemRect.bottom < vacuumRect.top ||
+					itemRect.top > vacuumRect.bottom
+				);
 
-			if (sucked) {
-				controls
-				.start({
-					scale: 0,
-					rotate: 1080,
-					opacity: 0,
-					transition: { duration: 0.4 }
-				})
-				.then(() => {
-					controls.set({
-					x: 0,
-					y: 0,
-					scale: 1,
-					rotate: 0,
-					opacity: 1
-					});
-				});
+				if (sucked) {
+					hasSucked = true; // STOP LOOP
 
-				return;
+					controls
+						.start({
+							scale: 0,
+							opacity: 0,
+							transition: { duration: 0.15 }
+						})
+						.then(() => {
+							controls.set({
+								x: 0,
+								y: 0,
+								scale: 1,
+								opacity: 1
+							});
+						});
+
+					return;
+				}
 			}
-			});
 
-		
-			// Stop when off screen
+			// -----------------------------
+			// STOP IF OFF SCREEN
+			// -----------------------------
 			if (y < window.innerHeight + 200) {
 				requestAnimationFrame(animate);
 			} else {

@@ -30,7 +30,7 @@
 }
 
 #container {
-  position: relative; /* so the badge can anchor to this */
+  position: relative; 
 }
 
 #total-badge {
