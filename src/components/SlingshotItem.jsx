@@ -27,17 +27,12 @@ export default function SlingshotItem({ item, onAdd, onMiss }) {
 
 			launchWithGravity(v0x, v0y);
 		} else {
-<<<<<<< HEAD
             onMiss?.();
-			// snap back
-			controls.start({ x: 0, y: 0, transition: { type: "spring", stiffness: 300 } });
-=======
 			controls.start({
 				x: 0,
 				y: 0,
 				transition: { type: "spring", stiffness: 300 }
 			});
->>>>>>> 99d156148897a7f7c5f29456ec8c0f043d0f4263
 		}
 	};
 
