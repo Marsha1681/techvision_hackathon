@@ -39,8 +39,85 @@
   right: 16px;
   padding: 8px 12px;
   border-radius: 999px;
-  background: rgba(0, 0, 0, 0.08);
+  background: rgba(0, 0, 0, 0.1);
   font-weight: 900;
   white-space: nowrap;
   z-index: 50;
+}
+<<<<<<< HEAD
+
+.popup-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.3);
+  z-index: 99999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.popup-modal {
+  position: relative;
+  width: min(420px, 90vw);
+  padding: 18px 18px 16px;
+  border-radius: 18px;
+  background: white;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.1);
+  border: 1px solid rgba(0,0,0,0.2);
+}
+
+.popup-close {
+  position: absolute;
+  top: 6px;
+  right: 8px;
+  width: 22px;
+  height: 22px;
+  border-radius: 999px;
+  border: 1px solid rgba(0,0,0,0.15);
+  background: rgba(0,0,0,0.06);
+  cursor: pointer;
+  font-weight: 900;
+  line-height: 18px;
+}
+
+.popup-close:hover {
+  background: rgba(0,0,0,0.1);
+}
+
+.popup-title {
+  font-weight: 900;
+  font-size: 18px;
+  margin-bottom: 8px;
+  color: #000;
+}
+
+.popup-text {
+  font-weight: 600;
+  opacity: 0.8;
+  color: #000;
+=======
+.vacuum-hole {
+  position: fixed;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: radial-gradient(circle at center, #000 40%, #111 60%, transparent 70%);
+  box-shadow:
+    0 0 15px rgba(0, 0, 0, 0.6),
+    0 0 40px rgba(0, 0, 0, 0.4),
+    inset 0 0 20px rgba(255, 255, 255, 0.1);
+  z-index: 100;
+  pointer-events: none;
+}
+
+/* Position the two holes differently */
+.vacuum-one {
+  top: 300px;
+  right: 35%;
+}
+
+.vacuum-two {
+  top: 500px;
+  right: 65%;
+>>>>>>> 99d156148897a7f7c5f29456ec8c0f043d0f4263
 }

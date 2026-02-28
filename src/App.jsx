@@ -9,6 +9,15 @@ function App() {
   const total = cartItems.reduce((sum, item) => sum + item.price, 0);
   const vWidth = window.innerWidth;
   const vHeight = window.innerHeight;
+  const [popup, setPopup] = useState(null);
+
+  function openPopup(p) {
+    setPopup(p);
+  }
+
+  function closePopup(){
+    setPopup(null);
+  }
 
   function addToCart(item) {
     setCartItems((prev) => [...prev, item]);
@@ -17,10 +26,25 @@ function App() {
   return (
     <>
       <div id="container">
-        <div id="total-badge">${total.toFixed(2)}</div>
+        <div id="total-badge">£{total.toFixed(2)}</div>
         <div id="item-list">
             <h2>Browse Items</h2>
-            <ShoppingList onAddToCart={addToCart} />
+            <ShoppingList onAddToCart={(item) => {
+              addToCart(item);
+              openPopup({
+                type: "success",
+                title: "added to cart :)",
+                text: `${item.name} — £${item.price.toFixed(2)}`
+                });
+              }}
+              onMiss={() =>
+                openPopup({
+                  type: "miss",
+                  title: "MISS",
+                  text: "do better lol"
+                })
+              }
+            />
         </div>
       <div>
           <motion.div
@@ -37,10 +61,28 @@ function App() {
             <Cart items={cartItems} />
           </motion.div>
         </div>
+        <div className="vacuum-hole vacuum-one"></div>
+        <div className="vacuum-hole vacuum-two"></div>
       </div>
+      {popup && (
+        <div className="popup-overlay">
+          <div className={`popup-modal ${popup.type}`}>
+            <button
+              type="button"
+              className="popup-close"
+              onClick={closePopup}
+              aria-label="Close"
+            >
+              ×
+            </button>
+
+            <h3 className="popup-title">{popup.title}</h3>
+            <p className="popup-text">{popup.text}</p>
+          </div>
+        </div>
+      )}
     </>
   )
 }
 
 export default App
-
