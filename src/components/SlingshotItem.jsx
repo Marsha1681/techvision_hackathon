@@ -19,46 +19,48 @@ export default function SlingshotItem({ item, onAdd }) {
 		const DISTANCE_THRESHOLD = 120;
 		const VELOCITY_THRESHOLD = 800;
 
-		if (distance > DISTANCE_THRESHOLD || velocity > VELOCITY_THRESHOLD) {
-			const cartEl = document.getElementById("cart");
+		if (distance > DISTANCE_THRESHOLD) {
 
-			// fallback target: center of viewport
-			let targetX = window.innerWidth / 2;
-			let targetY = window.innerHeight / 2;
+			const dx = info.offset.x;
+			const dy = info.offset.y;
 
-			const el = ref.current;
-			if (!el) return;
+			const v0x = -dx * 5;
+			const v0y = -dy * 5;
 
-			const fromRect = el.getBoundingClientRect();
+			// snap back instantly to base before launch
+			controls.set({ x: 0, y: 0 });
 
-			if (cartEl) {
-				const toRect = cartEl.getBoundingClientRect();
-				targetX = toRect.left + toRect.width / 2;
-				targetY = toRect.top + toRect.height / 2;
-			}
-
-			const fromX = fromRect.left + fromRect.width / 2;
-			const fromY = fromRect.top + fromRect.height / 2;
-
-			const deltaX = targetX - fromX;
-			const deltaY = targetY - fromY;
-
-			await controls.start({
-				x: deltaX,
-				y: deltaY,
-				scale: 0.5,
-				rotate: 360,
-				transition: { duration: 0.6, ease: "easeIn" },
-			});
-
-			if (typeof onAdd === "function") onAdd(item);
-
-			// reset position so item is usable again
-			controls.set({ x: 0, y: 0, scale: 1, rotate: 0 });
+			launchWithGravity(v0x, v0y);
 		} else {
 			// snap back
 			controls.start({ x: 0, y: 0, transition: { type: "spring", stiffness: 300 } });
 		}
+	};
+
+	const launchWithGravity = (v0x, v0y) => {
+		let start = null;
+		const gravity = 2000; // tweak this
+		const startX = 0;
+		const startY = 0;
+
+		const animate = (timestamp) => {
+			if (!start) start = timestamp;
+			const t = (timestamp - start) / 1000; // seconds
+
+			const x = startX + v0x * t;
+			const y = startY + v0y * t + 0.5 * gravity * t * t;
+
+			controls.set({ x, y });
+
+			// stop when it falls off screen
+			if (y < window.innerHeight + 200) {
+				requestAnimationFrame(animate);
+			} else {
+				controls.set({ x: 0, y: 0 });
+			}
+		};
+
+		requestAnimationFrame(animate);
 	};
 
 	return (
@@ -66,6 +68,7 @@ export default function SlingshotItem({ item, onAdd }) {
 			ref={ref}
 			className="shopping-item"
 			drag
+			dragMomentum={false}
 			dragElastic={0.2}
 			animate={controls}
 			onDragEnd={handleDragEnd}
