@@ -2,10 +2,13 @@
 import "./Cart.css";
 
 function Cart({ items }) {
+    const MAX_ITEMS = 8;
+    const isFull = items.length >= MAX_ITEMS;
+
   return (
     <div id="cart">
       <div id="cart-stack">
-        {items.map((item, index) => (
+        {items.slice(0, MAX_ITEMS).map((item, index) => (
           <div
             key={index}
             className="cart-item"
@@ -19,6 +22,7 @@ function Cart({ items }) {
           </div>
         ))}
       </div>
+      {isFull && <div className="cart-full">Cart is full!</div>}
     </div>
   );
 }
