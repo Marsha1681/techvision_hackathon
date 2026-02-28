@@ -3,6 +3,9 @@ import { motion } from "framer-motion";
 import './App.css'
 
 function App() {
+  const vWidth = window.innerWidth;
+  const vHeight = window.innerHeight;
+
   return (
     <>
       <div id="container">
@@ -14,10 +17,10 @@ function App() {
           <motion.img
             src="/shopping-cart.png"
             alt="Shopping cart image"
-            initial={{ x: 0, y: 0 }}
-            animate={{ x: [0, 200, 0] }}
+            initial={{ x: 0, y: vHeight - 300 }}
+            animate={{ x: [0, vWidth - 600, 0] }}
             transition={{
-              duration: 2,
+              duration: 3,
               repeat: Infinity,
               repeatType: "loop",
               ease: "linear"
