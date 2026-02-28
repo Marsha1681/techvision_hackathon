@@ -44,6 +44,7 @@
   white-space: nowrap;
   z-index: 50;
 }
+<<<<<<< HEAD
 
 .popup-overlay {
   position: fixed;
@@ -94,4 +95,29 @@
   font-weight: 600;
   opacity: 0.8;
   color: #000;
+=======
+.vacuum-hole {
+  position: fixed;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: radial-gradient(circle at center, #000 40%, #111 60%, transparent 70%);
+  box-shadow:
+    0 0 15px rgba(0, 0, 0, 0.6),
+    0 0 40px rgba(0, 0, 0, 0.4),
+    inset 0 0 20px rgba(255, 255, 255, 0.1);
+  z-index: 100;
+  pointer-events: none;
+}
+
+/* Position the two holes differently */
+.vacuum-one {
+  top: 300px;
+  right: 35%;
+}
+
+.vacuum-two {
+  top: 500px;
+  right: 65%;
+>>>>>>> 99d156148897a7f7c5f29456ec8c0f043d0f4263
 }

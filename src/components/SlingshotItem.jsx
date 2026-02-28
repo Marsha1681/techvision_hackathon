@@ -3,83 +3,130 @@ import { useRef } from "react";
 
 /**
  * SlingshotItem
- * - Drag the item; if released with enough offset or velocity it will fly
- *   toward the element with id="cart" and call `onAdd(item)`.
+ * - Drag the item; if released with enough offset it will fly
+ *   toward the cart and can also get sucked into the vacuum hole.
  */
 export default function SlingshotItem({ item, onAdd, onMiss }) {
 	const controls = useAnimation();
 	const ref = useRef(null);
 
 	const handleDragEnd = async (event, info) => {
-		// use offset (movement while dragging) rather than absolute pointer
 		const distance = Math.hypot(info.offset.x, info.offset.y);
-		const velocity = Math.hypot(info.velocity.x, info.velocity.y || 0);
 
-		// thresholds - tweak if needed
 		const DISTANCE_THRESHOLD = 120;
-		const VELOCITY_THRESHOLD = 800;
 
 		if (distance > DISTANCE_THRESHOLD) {
-
 			const dx = info.offset.x;
 			const dy = info.offset.y;
 
 			const v0x = -dx * 7;
 			const v0y = -dy * 7;
 
-			// snap back instantly to base before launch
+			// Snap back instantly before launch
 			controls.set({ x: 0, y: 0 });
 
 			launchWithGravity(v0x, v0y);
 		} else {
+<<<<<<< HEAD
             onMiss?.();
 			// snap back
 			controls.start({ x: 0, y: 0, transition: { type: "spring", stiffness: 300 } });
+=======
+			controls.start({
+				x: 0,
+				y: 0,
+				transition: { type: "spring", stiffness: 300 }
+			});
+>>>>>>> 99d156148897a7f7c5f29456ec8c0f043d0f4263
 		}
 	};
 
 	const launchWithGravity = (v0x, v0y) => {
 		let start = null;
 		let hasAdded = false;
-		const gravity = 2000; // tweak this
+
+		const gravity = 2000;
 		const startX = 0;
 		const startY = 0;
-		
 
 		const animate = (timestamp) => {
 			if (!start) start = timestamp;
-			const t = (timestamp - start) / 1000; // seconds
+			const t = (timestamp - start) / 1000;
 
 			const x = startX + v0x * t;
 			const y = startY + v0y * t + 0.5 * gravity * t * t;
 
 			controls.set({ x, y });
 
+			const element = ref.current;
+			if (!element) return;
+
+			const itemRect = element.getBoundingClientRect();
+
+			// -----------------------------
+			// 🛒 CART COLLISION CHECK
+			// -----------------------------
 			if (!hasAdded) {
 				const cartEl = document.querySelector("#cart-stack");
-				const el = ref.current;
 
-			if (cartEl && el) {
-				const cartRect = cartEl.getBoundingClientRect();
-				const itemRect = el.getBoundingClientRect();
+				if (cartEl) {
+					const cartRect = cartEl.getBoundingClientRect();
 
-				const isTouching = !(
-				itemRect.right < cartRect.left ||
-				itemRect.left > cartRect.right ||
-				itemRect.bottom < cartRect.top ||
-				itemRect.top > cartRect.bottom
-				);
+					const isTouching = !(
+						itemRect.right < cartRect.left ||
+						itemRect.left > cartRect.right ||
+						itemRect.bottom < cartRect.top ||
+						itemRect.top > cartRect.bottom
+					);
 
-				if (isTouching) {
-				hasAdded = true;
-				onAdd(item);           
-				controls.set({ x: 0, y: 0 });
-				return;              
+					if (isTouching) {
+						hasAdded = true;
+						onAdd(item);
+						controls.set({ x: 0, y: 0 });
+						return;
+					}
 				}
 			}
-			}
 
-			// stop when it falls off screen
+			
+			// VACUUM COLLISION CHECK (MULTIPLE)
+
+			const vacuums = document.querySelectorAll(".vacuum-hole");
+
+			vacuums.forEach((vacuum) => {
+			const vacuumRect = vacuum.getBoundingClientRect();
+
+			const sucked = !(
+				itemRect.right < vacuumRect.left ||
+				itemRect.left > vacuumRect.right ||
+				itemRect.bottom < vacuumRect.top ||
+				itemRect.top > vacuumRect.bottom
+			);
+
+			if (sucked) {
+				controls
+				.start({
+					scale: 0,
+					rotate: 1080,
+					opacity: 0,
+					transition: { duration: 0.4 }
+				})
+				.then(() => {
+					controls.set({
+					x: 0,
+					y: 0,
+					scale: 1,
+					rotate: 0,
+					opacity: 1
+					});
+				});
+
+				return;
+			}
+			});
+
+		
+			// Stop when off screen
 			if (y < window.innerHeight + 200) {
 				requestAnimationFrame(animate);
 			} else {
@@ -103,7 +150,11 @@ export default function SlingshotItem({ item, onAdd, onMiss }) {
 			whileTap={{ cursor: "grabbing" }}
 			whileDrag={{ scale: 1.05 }}
 		>
-			<img src={item.image} alt={item.name} className="shopping-image" />
+			<img
+				src={item.image}
+				alt={item.name}
+				className="shopping-image"
+			/>
 			<p className="shopping-label">{item.name}</p>
 		</motion.div>
 	);
