@@ -15,7 +15,7 @@ function Cart({ items }) {
               zIndex: index,
             }}
           >
-            <img src={item.image} alt={item.name} style={{ width: 30, height: 30, objectFit: "contain" }} />
+            <img src={item.image} alt={item.name} style={{ width: 50, height: 50, objectFit: "contain" }} />
           </div>
         ))}
       </div>
