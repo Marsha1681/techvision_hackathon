@@ -24,8 +24,8 @@ export default function SlingshotItem({ item, onAdd }) {
 			const dx = info.offset.x;
 			const dy = info.offset.y;
 
-			const v0x = -dx * 5;
-			const v0y = -dy * 5;
+			const v0x = -dx * 7;
+			const v0y = -dy * 7;
 
 			// snap back instantly to base before launch
 			controls.set({ x: 0, y: 0 });
