@@ -37,6 +37,8 @@ function App() {
             <Cart items={cartItems} />
           </motion.div>
         </div>
+        <div className="vacuum-hole vacuum-one"></div>
+        <div className="vacuum-hole vacuum-two"></div>
       </div>
     </>
   )
