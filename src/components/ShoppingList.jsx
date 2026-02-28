@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import "./ShoppingList.css";
+import SlingshotItem from "./SlingshotItem";
 
 const items = [
   { id: 1, name: "Dress", image: "/dress.png" },
@@ -14,21 +15,11 @@ const items = [
   { id: 10, name: "Perfume", image: "/perfume.png" },
 ];
 
-export default function ShoppingList() {
+export default function ShoppingList({ onAdd }) {
   return (
     <div className="shopping-container">
       {items.map((item) => (
-        <motion.div
-          key={item.id}
-          className="shopping-item"
-        >
-          <img
-            src={item.image}
-            alt={item.name}
-            className="shopping-image"
-          />
-          <p className="shopping-label">{item.name}</p>
-        </motion.div>
+        <SlingshotItem key={item.id} item={item} onAdd={onAdd} />
       ))}
     </div>
   );

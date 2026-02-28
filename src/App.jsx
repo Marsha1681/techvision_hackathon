@@ -15,6 +15,7 @@ function App() {
         </div>
         <div>
           <motion.img
+            id="cart"
             src="/shopping-cart.png"
             alt="Shopping cart image"
             initial={{ x: 0, y: vHeight - 300 }}

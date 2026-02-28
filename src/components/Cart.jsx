@@ -3,7 +3,7 @@ import "./Cart.css";
 function Cart({ items }) {
   return (
     <div id="cart">
-      <div id="cart-icon"></div>
+        <div id="cart-icon">🛒</div>
 
       <div id="cart-stack">
         {items.map((item, index) => (
