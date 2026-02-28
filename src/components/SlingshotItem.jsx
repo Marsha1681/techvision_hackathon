@@ -39,9 +39,11 @@ export default function SlingshotItem({ item, onAdd }) {
 
 	const launchWithGravity = (v0x, v0y) => {
 		let start = null;
+		let hasAdded = false;
 		const gravity = 2000; // tweak this
 		const startX = 0;
 		const startY = 0;
+		
 
 		const animate = (timestamp) => {
 			if (!start) start = timestamp;
@@ -51,6 +53,30 @@ export default function SlingshotItem({ item, onAdd }) {
 			const y = startY + v0y * t + 0.5 * gravity * t * t;
 
 			controls.set({ x, y });
+
+			if (!hasAdded) {
+				const cartEl = document.querySelector("#cart-stack");
+				const el = ref.current;
+
+			if (cartEl && el) {
+				const cartRect = cartEl.getBoundingClientRect();
+				const itemRect = el.getBoundingClientRect();
+
+				const isTouching = !(
+				itemRect.right < cartRect.left ||
+				itemRect.left > cartRect.right ||
+				itemRect.bottom < cartRect.top ||
+				itemRect.top > cartRect.bottom
+				);
+
+				if (isTouching) {
+				hasAdded = true;
+				onAdd(item);           
+				controls.set({ x: 0, y: 0 });
+				return;              
+				}
+			}
+			}
 
 			// stop when it falls off screen
 			if (y < window.innerHeight + 200) {
