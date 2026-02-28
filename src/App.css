@@ -2,13 +2,14 @@
   max-width: 1280px;
   margin: 0 auto;
   padding: 2rem;
+  text-align: center;
 }
 
-.item-list {
+#item-list {
   position: fixed;
   background-color: grey;
   top: 0;
   left: 0;
   height: 100vh;
-  width: 500px;
+  width: 300px;
 }
