@@ -44,7 +44,6 @@
   white-space: nowrap;
   z-index: 50;
 }
-<<<<<<< HEAD
 
 .popup-overlay {
   position: fixed;
@@ -95,7 +94,8 @@
   font-weight: 600;
   opacity: 0.8;
   color: #000;
-=======
+}
+
 .vacuum-hole {
   position: fixed;
   width: 120px;
@@ -119,5 +119,4 @@
 .vacuum-two {
   top: 500px;
   right: 65%;
->>>>>>> 99d156148897a7f7c5f29456ec8c0f043d0f4263
 }
