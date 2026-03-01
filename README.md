@@ -1,18 +1,47 @@
-# React + Vite
+# Slingshot Shopping: The "Bad UI" Experience
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A physics-based shopping interface where grabbing your items is easy, but getting them into the cart is a challenge of gravity and skill.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## How It Works
 
-## React Compiler
+### 1. Drag Interaction
+* Users drag an item from the **shopping item** under browse items to shoot item to the right side.
+* If released with enough force and distance, the item launches into the cart area or misses it. There is also a whoosh sound effect.
+* The velocity is determined by the "pull-back" distance, creating a true slingshot feel, the more you pull back and down the more it likely it jumps.
 
-The React Compiler is enabled on this template. See [this documentation](https://react.dev/learn/react-compiler) for more information.
+### 2. Cart Collision
+*  Items must land through the top opening of the cart to count.
+*  Once inside, items stack with random rotations to simulate a messy shopping pile.
+* **Feedback:** A successful hit triggers a `pop` sound and updates the total price badge.
 
-Note: This will impact Vite dev & build performances.
+### 3. Vacuum Collision
+* **The Obstacles:** Beware of the floating black Vacuum Holes!
+* If a shopping item touches a vacuum, it instantly shrinks and is sucked into the void.
+* The items getting sucked in are accompanied by a satisfying `suction` sound effect.
 
-## Expanding the ESLint configuration
+### 4. Miss Logic
+* If the item misses the cart and falls off the screen, a **"MISS"** popup appears to let you know you need to do better!
+* When you have successfully put 8 shopping items into the cart, a red message pops up saying cart is full. 
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+---
+
+## Installation & Setup
+
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/Marsha1681/techvision_hackathon.git
+
+2. **Navigate into the project folder**
+   ```bash
+   cd techvision_hackathon
+   
+3. **Install dependencies**
+   ```bash
+   npm install
+   
+4. Start the Server
+   ```bash
+   npm run dev
+   
