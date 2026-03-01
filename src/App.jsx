@@ -10,6 +10,7 @@ function App() {
   const vWidth = window.innerWidth;
   const vHeight = window.innerHeight;
   const [popup, setPopup] = useState(null);
+  const MAX_ITEMS = 8;
 
   function openPopup(p) {
     setPopup(p);
@@ -20,7 +21,10 @@ function App() {
   }
 
   function addToCart(item) {
-    setCartItems((prev) => [...prev, item]);
+    setCartItems((prev) => {
+      if (prev.length >= MAX_ITEMS) return prev;
+      return [...prev, item];
+  });
   }
 
   return (
@@ -39,20 +43,24 @@ function App() {
         <div id="item-list">
             <h2>Browse Items</h2>
             <ShoppingList onAddToCart={(item) => {
+              if (cartItems.length >= MAX_ITEMS) {
+                return;
+              }
+
               addToCart(item);
               openPopup({
                 type: "success",
                 title: "added to cart :)",
                 text: `${item.name} — £${item.price.toFixed(2)}`
-                });
-              }}
-              onMiss={() =>
-                openPopup({
-                  type: "miss",
-                  title: "MISS",
-                  text: "do better lol"
-                })
-              }
+              });
+            }}
+            onMiss={() =>
+              openPopup({
+                type: "miss",
+                title: "MISS",
+                text: "do better lol"
+              })
+            }
             />
         </div>
       <div>
