@@ -1,6 +1,8 @@
 import { motion, useAnimation } from "framer-motion";
 import { useRef } from "react";
-
+import whooshSound from '../assets/sounds/whoosh.mp3';
+import popSound from '../assets/sounds/pop.mp3';
+import suctionSound from '../assets/sounds/suction.mp3';
 
 /**
  * SlingshotItem
@@ -10,12 +12,18 @@ import { useRef } from "react";
 export default function SlingshotItem({ item, onAdd, onMiss }) {
 	const controls = useAnimation();
 	const ref = useRef(null);
+	const playSound = (soundFile) => {
+		const audio = new Audio(soundFile);
+		audio.volume = 0.3; // subtle, not annoying
+		audio.play();
+	};
 
 	const handleDragEnd = async (event, info) => {
 		const distance = Math.hypot(info.offset.x, info.offset.y);
 		const DISTANCE_THRESHOLD = 120;
 
 		if (distance > DISTANCE_THRESHOLD) {
+			playSound(whooshSound);
 			const dx = info.offset.x;
 			const dy = info.offset.y;
 
@@ -76,6 +84,7 @@ export default function SlingshotItem({ item, onAdd, onMiss }) {
 					if (isTouching) {
 						hasAdded = true;
 						onAdd(item);
+						playSound(popSound);
 						controls.set({ x: 0, y: 0 });
 						return;
 					}
@@ -97,7 +106,7 @@ export default function SlingshotItem({ item, onAdd, onMiss }) {
 
 				if (sucked) {
 					hasSucked = true; // STOP LOOP
-
+					playSound(suctionSound);
 					controls
 						.start({
 							scale: 0,
