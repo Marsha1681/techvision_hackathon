@@ -5,20 +5,39 @@
 
 /* left side */
 #item-list {
-  width: 280px;
-  background: linear-gradient(to bottom, #f8f8f8, #eaeaea);
-  padding: 20px;
-  box-shadow: 5px 0 20px rgba(0, 0, 0, 0.1);
+  width: 320px;
+  padding: 18px;
+  margin-top: 66px;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.55);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(0,0,0,0.08);
+  box-shadow: 0 12px 30px rgba(0,0,0,0.08);
   display: flex;
   flex-direction: column;
+  height: calc(100vh - 66px - 18px); 
+  overflow: hidden;
 }
 
 #item-list h2 {
+  font-size: 20px;
+  font-weight: 900;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #0f215f;
   text-align: center;
-  color: #000;
-  margin-bottom: 15px;
-  font-weight: 600;
+  margin-bottom: 18px;
+  position: relative;
 }
+
+#item-list h2::after {
+  content: "";
+  display: block;
+  margin: 10px auto 0;
+  width: 60%;
+  height: 2px;
+  background: linear-gradient(to right, transparent, #ff006a, transparent);
+} 
 
 /* right side cart area */
 #cart-area {
@@ -35,65 +54,110 @@
 
 #total-badge {
   position: absolute;
-  top: 12px;
-  right: 16px;
-  padding: 8px 12px;
-  border-radius: 999px;
-  background: rgba(0, 0, 0, 0.1);
+  top: 100px;
+  right: 18px;
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  padding: 10px 14px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, #ff006a, #ff9f0a);
+  color: #000;
   font-weight: 900;
-  white-space: nowrap;
+  box-shadow: 0 10px 35px rgba(255, 0, 106, 0.6);
   z-index: 50;
+}
+
+#total-badge::before {
+  content: "TOTAL:";
+  font-size: 20px;
+  letter-spacing: 1.2px;
+  opacity: 0.7;
 }
 
 .popup-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,0.3);
+  background: rgba(10, 10, 20, 0.55);
+  backdrop-filter: blur(6px);
   z-index: 99999;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.popup-modal {
+.popup-overlay .popup-modal {
   position: relative;
   width: min(420px, 90vw);
-  padding: 18px 18px 16px;
-  border-radius: 18px;
-  background: white;
-  box-shadow: 0 20px 60px rgba(0,0,0,0.1);
-  border: 1px solid rgba(0,0,0,0.2);
+  padding: 26px 26px 22px;
+  background:
+    radial-gradient(circle at top left, #5277d5, #5656aa 70%);
+  border-radius: 26px;
+  box-shadow:
+    0 40px 120px rgba(0,0,0,0.55),
+    inset 0 0 30px rgba(255,255,255,0.7);
+  animation: popupLuxuryIn 0.35s cubic-bezier(.2,1.4,.4,1);
+}
+
+@keyframes popupLuxuryIn {
+  from {
+    opacity: 0;
+    transform: scale(0.75) translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
 }
 
 .popup-close {
   position: absolute;
-  top: 6px;
-  right: 8px;
-  width: 22px;
-  height: 22px;
-  border-radius: 999px;
-  border: 1px solid rgba(0,0,0,0.15);
+  top: 14px;
+  right: 14px;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: none;
   background: rgba(0,0,0,0.06);
-  cursor: pointer;
+  color: #000;
+  font-size: 18px;
   font-weight: 900;
-  line-height: 18px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s ease, transform 0.2s ease;
 }
 
 .popup-close:hover {
-  background: rgba(0,0,0,0.1);
+  background: rgba(0,0,0,0.12);
+  transform: scale(1.1) rotate(5deg);
+}
+
+.popup-overlay .popup-modal.success {
+  border-left: 8px solid #2ecc71;
+}
+
+.popup-overlay .popup-modal.miss {
+  border-left: 8px solid #ff4d4d;
 }
 
 .popup-title {
+  margin-top: 6px;
+  margin-bottom: 10px;
+  font-size: 22px;
   font-weight: 900;
-  font-size: 18px;
-  margin-bottom: 8px;
-  color: #000;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #111;
 }
 
 .popup-text {
+  font-size: 15px;
   font-weight: 600;
-  opacity: 0.8;
-  color: #000;
+  line-height: 1.5;
+  color: #333;
+  opacity: 0.85;
 }
 
 .vacuum-hole {
@@ -101,13 +165,34 @@
   width: 120px;
   height: 120px;
   border-radius: 50%;
-  background: radial-gradient(circle at center, #000 40%, #111 60%, transparent 70%);
-  box-shadow:
-    0 0 15px rgba(0, 0, 0, 0.6),
-    0 0 40px rgba(0, 0, 0, 0.4),
-    inset 0 0 20px rgba(255, 255, 255, 0.1);
+  background:
+    radial-gradient(circle at center,
+      #000 35%,
+      #1a1a1a 55%,
+      rgba(0,0,0,0.8) 65%,
+      transparent 72%);
   z-index: 100;
   pointer-events: none;
+  box-shadow:
+    0 0 25px rgba(120, 0, 255, 0.6),
+    0 0 60px rgba(120, 0, 255, 0.4),
+    inset 0 0 25px rgba(255, 255, 255, 0.1);
+  animation: vacuumGlow 1.5s ease-in-out infinite alternate;
+}
+
+@keyframes vacuumGlow {
+  from {
+    box-shadow:
+      0 0 20px rgba(120, 0, 255, 0.5),
+      0 0 40px rgba(120, 0, 255, 0.3),
+      inset 0 0 15px rgba(255,255,255,0.08);
+  }
+  to {
+    box-shadow:
+      0 0 40px rgba(180, 0, 255, 0.9),
+      0 0 90px rgba(180, 0, 255, 0.6),
+      inset 0 0 25px rgba(255,255,255,0.15);
+  }
 }
 
 /* Position the two holes differently */
@@ -119,4 +204,57 @@
 .vacuum-two {
   top: 500px;
   right: 65%;
+}
+
+#container {
+  display: flex;
+  height: 100vh;
+  position: relative;
+  padding: 18px;             
+  gap: 18px;
+  box-sizing: border-box;
+}
+
+
+#topbar {
+  position: absolute;
+  top: 14px;
+  left: 18px;
+  right: 18px;
+  height: 54px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 14px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.65);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(0,0,0,0.08);
+  z-index: 60;
+}
+
+#topbar-left {
+  display: flex;
+  gap: 10px;
+}
+
+.icon-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 12px;
+  border: 1px solid rgba(0,0,0,0.10);
+  background: rgba(255,255,255,0.7);
+  cursor: pointer;
+  font-size: 18px;
+  line-height: 1;
+}
+
+.icon-btn:hover {
+  background: rgba(255,255,255,0.95);
+}
+
+#brand {
+  font-weight: 900;
+  letter-spacing: 0.3px;
+  color: #111;
 }

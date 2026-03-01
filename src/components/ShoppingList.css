@@ -10,6 +10,16 @@
   align-items: center;
   gap: 10px;
   cursor: grab;
+  background: linear-gradient(135deg, #242446, #111118);
+  border-radius: 16px;
+  padding: 10px 14px;
+  box-shadow:
+    0 10px 30px rgba(0,0,0,0.5),
+    inset 0 0 12px rgba(255,255,255,0.05);
+}
+
+.shopping-item:hover {
+  filter: brightness(1.15) saturate(1.2);
 }
 
 /* to have smaller icons for images */
@@ -19,9 +29,13 @@
   object-fit: contain;
 }
 
+.shopping-image {
+  filter: drop-shadow(0 4px 6px rgba(0,0,0,0.5));
+}
+
 /* the list on the right */
 .shopping-label {
   font-size: 14px;
   font-weight: 500;
-  color: #333;
+  color: rgba(255, 255, 255, 0.849);
 }

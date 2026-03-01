@@ -26,6 +26,15 @@ function App() {
   return (
     <>
       <div id="container">
+        <div id="topbar">
+          <div id="topbar-left">
+            <button className="icon-btn" aria-label="Profile">👤</button>
+            <button className="icon-btn" aria-label="Cart">🛒</button>
+          </div>
+          <div id="topbar-right">
+            <span id="brand">LuxuryShops</span>
+          </div>
+        </div>
         <div id="total-badge">£{total.toFixed(2)}</div>
         <div id="item-list">
             <h2>Browse Items</h2>
