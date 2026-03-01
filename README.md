@@ -47,6 +47,5 @@ the further it will travel.
    ```bash
    npm run dev
    
-5. Go to the local host webpage
-   ```bash
-   http://localhost:5173/
+5. Go to the local host webpage (http://localhost:5173/)
+   
