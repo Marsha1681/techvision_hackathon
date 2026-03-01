@@ -1,7 +1,7 @@
 .shopping-container {
   display: flex;
   flex-direction: column;
-  gap: 12px; /* for smaller spacing lol */
+  gap: 6px; /* for smaller spacing lol */
   align-items: center;
 }
 

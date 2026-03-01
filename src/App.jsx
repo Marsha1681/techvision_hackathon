@@ -36,7 +36,7 @@ function App() {
             <button className="icon-btn" aria-label="Cart">🛒</button>
           </div>
           <div id="topbar-right">
-            <span id="brand">LuxuryShops</span>
+            <span id="brand">SlingshotShopping</span>
           </div>
         </div>
         <div id="total-badge">£{total.toFixed(2)}</div>
